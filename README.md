@@ -1,5 +1,5 @@
 # min-linux
-a extremely useless linux "distro" that runs on hopes and prayers
+a extremely useless linux "distro" that runs on hopes and prayers,
 you can grab the newest version from the releases tab
 
 # tf does ts even have
@@ -9,8 +9,7 @@ uhhh
 assembly compiler type shi
 
 # ccowsay
-no that isnt a typo thats the name
-its cowsay but in c
+no that isnt a typo thats the name, its cowsay but in c
 
 # assfetch
 shows system information like neofetch and its 5213918309123780179873 different alternatives
@@ -29,5 +28,12 @@ init system that i dont think i set up actually :sob:
 # lynx
 web browser that may or may not load pages
 
+# busybox
+it uses busybox so you get a bunch of built in commands (and a shell)
+ash (shell)
+base32 and 64
+ping
+uhhhhhhhhhhhhhhh
+uptime 🗣️:fire:
 # probably missed one or 2 but idgaf 👅👅
 yuhhhhhhhhhhhhhh
