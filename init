@@ -105,6 +105,11 @@ mount -vt tmpfs none /dev/shm
 #### TODO: it isnt giving this error but it would still be a good idea to make a fstab
 # error "can't open /etc/fstab: No such file or directory." can happen since it doesnt fucking exist, tho it isnt too important for now so it WILL be ignored
 
+# /etc/fstab edit this if yo shit different
+# mkdir /mnt/yourfolder
+# mount /dev/yourdisk
+# echo "UUID=YOUR DISKS UUID /yourfolder ext4(change if its like, ext3 or sum shit) defaults 0 2" > /etc/fstab
+
 #### exports some shi and starts /bin/sh + sum other shi
 printf "linux type shi"
 printf "			"
@@ -147,6 +152,18 @@ route add default gw 10.0.2.2
 # set dns resolver (8.8.8.8) in this case tho it can be anything im pretty sure
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 #### 4 commands took me like 1 day and 6 hours :heartbroken:
+
+### ssl stuff
+export SSL_CERT_DIR=/ssl/certs
+export SSL_CERT_FILE=/ssl/certs/ca-certificates.crt
+
+##### alpine package keeper
+### PACKAGES!!!!!!!!!!!!!!!!!!!!!!
+apk update --allow-untrusted
+# fix untrusted signature bullshit
+apk add --allow-untrusted alpine-keys
+apk update
+### should just work now (without having to add --allow-untrusted)
 
 ##### shell
 ## TODO: get bash maybe?
