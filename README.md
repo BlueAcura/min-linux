@@ -2,6 +2,9 @@
 a extremely useless linux "distro" that runs on hopes and prayers,
 you can grab the newest version from the releases tab
 
+also if you want to compile the kernel n shi i left my .config in this repository
+(the init file the system uses is also in here)
+
 # tf does ts even have
 uhhh
 
