@@ -123,8 +123,9 @@ export LYNX_CFG=/etc/lynx.cfg
 export LYNX_LSS=/etc/lynx.lss
 
 ##### ldconfig stuff
-# TODO: add like an alias for ldconfig for easier use
-# writing -C after every fucking use is going to be my 13th reason istg
+## TODO: add like an alias for ldconfig for easier use
+## writing -C after every fucking use is going to be my 13th reason istg
+## ion think its that deep brotato chip :v:
 /sbin/ldconfig -C /etc/ld.so.cache
 /sbin/ldconfig -C /etc/ld.so.cache -n -v /lib
 
