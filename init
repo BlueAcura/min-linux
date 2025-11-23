@@ -1,0 +1,155 @@
+#!/bin/sh
+######### A LOT of stuff to do with /dev is now replaced with mdev fyi
+
+### making and mounting /proc
+mkdir /proc
+mount -t proc proc /proc
+
+### making /dev dir
+mkdir /dev
+
+### mounting and making /dev directories, uncomment the line above if for some reason the /dev directory doesnt exist
+# mount -nvt tmpfs none /dev
+# mknod -m 666 /dev/null c 1 3
+# mknod -m 666 /dev/zero c 1 5
+# mknod -m 666 /dev/ptmx c 5 2
+# mknod -m 666 /dev/tty c 5 0
+# mknod -m 444 /dev/random c 1 8
+# mknod -m 444 /dev/urandom c 1 9
+#### replaced by mdev
+
+### make /etc dir cus i forgot to do this dalksjdba oljdgw;oudg[UOGWDUIOAGB
+mkdir /etc
+
+#### stuff for the root user
+#### kinda useless for now, buh
+cat > /etc/passwd << "EOF"
+root:rootpasswd:0:0:root:/root:/bin/sh
+EOF
+
+### "idfk what this does but its for the tty,ptmx and console so its probably pretty important"
+## this SHOULD, and i mean SHOULD work
+## shit did not work :sob:, TODO: fix ts :brokenheart:
+# chown -v root:tty /dev/{console,ptmx,tty}
+
+### MAKES SYSTEM GROUPS, well, i dont think they are *too* important for now but itll save probably A LOT of time later on.
+## adds groups:
+## root, bin, sys, kmen, etc
+cat > /etc/group << "EOF"
+root:x:0:
+bin:x:1:
+sys:x:2:
+kmem:x:3:
+tty:x:4:
+tape:x:5:
+daemon:x:6:
+floppy:x:7:
+disk:x:8:
+lp:x:9:
+dialout:x:10:
+audio:x:11:
+video:x:12:
+utmp:x:13:
+usb:x:14:
+cdrom:x:15:
+EOF
+
+### linking /proc folders to /dev ones
+
+### these really arent needed at all anymore
+# ln -sv /proc/self/fd /dev/fd
+# ln -sv /proc/self/fd/0 /dev/stdin
+# ln -sv /proc/self/fd/1 /dev/stdout
+# ln -sv /proc/self/fd/2 /dev/stderr
+# ln -sv /proc/kcore /dev/core
+### mdev replaced all ts :mending_heart:
+
+### making /dev/pts and /dev/shm for later use
+mkdir -v /dev/pts
+mkdir -v /dev/shm
+### keeping this just incase
+
+### making /tmp,/var,/var/tmp etc
+install -dv /var
+install -dv /tmp /var/tmp -m 1777
+install -dv /var/lock
+install -dv /var/log
+install -dv /var/mail
+install -dv /var/run
+install -dv /var/spool
+install -dv /var/opt
+install -dv /var/cache
+install -dv /var/lib
+install -dv /var/misc
+install -dv /var/locate
+install -dv /var/local
+
+### mounting the virtual kernel file systems type shi
+mount -vt devpts -o gid=4,mode=620 none /dev/pts
+
+### make /sys too
+mkdir /sys
+### sysfs wowzers!!!!!!!!!!!!!!
+mount -vt sysfs sysfs /sys
+### still mounting sys since mdev NEEDS it
+
+### temp fs self explanatory
+mount -vt tmpfs none /dev/shm
+
+###### DISKS???
+# sorta, ig? not the best way to do it but we dont have shit anyways so it doesnt even matter
+# broken, removed the lines that sat below, TODO: find a way to get disks to show up n stuff
+#### oh and, TODO: get a FUNCTIONAL init system too, you twat
+#### UPDATE: now using mdev all of that is not needed
+
+#### TODO: it isnt giving this error but it would still be a good idea to make a fstab
+# error "can't open /etc/fstab: No such file or directory." can happen since it doesnt fucking exist, tho it isnt too important for now so it WILL be ignored
+
+#### exports some shi and starts /bin/sh + sum other shi
+printf "linux type shi"
+printf "			"
+printf "password for root *SHOULD* be 'rootpasswd'."
+printf "			"
+
+### LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/lib
+
+### PATH
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+### LYNX_CFG and LYNX_LSS
+# now lynx *SHOULD* work just fine
+export LYNX_CFG=/etc/lynx.cfg
+export LYNX_LSS=/etc/lynx.lss
+
+##### ldconfig stuff
+# TODO: add like an alias for ldconfig for easier use
+# writing -C after every fucking use is going to be my 13th reason istg
+/sbin/ldconfig -C /etc/ld.so.cache
+/sbin/ldconfig -C /etc/ld.so.cache -n -v /lib
+
+# mdev
+### this should just work
+mdev -s
+### this singular command replaced 10+ other commands
+
+##### virt_wifi
+# enabling virt_wifi kernel driver
+modprobe virt_wifi
+
+# configure static ip
+ifconfig eth0 10.0.2.15 netmask 255.255.255.0 up
+
+# set default gateway
+route add default gw 10.0.2.2
+
+# set dns resolver (8.8.8.8) in this case tho it can be anything im pretty sure
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+#### 4 commands took me like 1 day and 6 hours :heartbroken:
+
+##### shell
+## TODO: get bash maybe?
+## i mean zsh IS installed so i might replace /bin/sh, i dunno
+## UPDATE: using zsh now
+## UPDATE: nvm zsh is pissing me off so back to ash we go
+/bin/sh
