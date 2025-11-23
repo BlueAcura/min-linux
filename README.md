@@ -34,6 +34,6 @@ ash (shell)
 base32 and 64
 ping
 uhhhhhhhhhhhhhhh
-uptime 🗣️:fire:
+uptime 🗣️🔥
 # probably missed one or 2 but idgaf 👅👅
 yuhhhhhhhhhhhhhh
